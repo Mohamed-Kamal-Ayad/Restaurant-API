@@ -85,12 +85,12 @@ class MealController extends Controller
             return $this->apiResponse(null, 'Not found', 404);
         }
 
-        if(File::exists(public_path("storage/$meal->image")))
+        if(isset($request['image']))
         {
         File::delete(public_path("storage/$meal->image"));
+        $request->image = request()->file('image')->store('images');
         }
 
-        $request->image = request()->file('image')->store('images');
 
         $meal->title = $request->title;
         $meal->description = $request->description;
